@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdbool.h>
-#include <stdlib.h>
+#include <string.h>
+#include "../gplib/char.h"
 
 void part_one(FILE*);
 void part_two(FILE*);
@@ -22,10 +23,10 @@ void part_one(FILE *f){
         if(c != '\n'){
             if(isdigit(c)){
                 if(!found_first){
-                    num1 = char_to_unsigned(c);
+                    num1 = char_to_short_unsigned(c);
                     found_first = true;
                 }
-                num2 = char_to_unsigned(c); 
+                num2 = char_to_short_unsigned(c); 
             }
         }else{
             sum += num1*10 + num2;
