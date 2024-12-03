@@ -2,53 +2,53 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include "../gplib/array.h"
 
-#define HEURISTIC_SIZE 1000
-#define NUMBER_CHARACTERS_HEURISTIC_SIZE 100
+#define LINE_HEURISTIC_MAX_SIZE 1000
+#define LEVEL_HEURISTIC_MAX_SIZE 100
 
 typedef enum{increasing, decreasing} trend;
 
-int main(){
-    char line[HEURISTIC_SIZE];
-    char *number_str;
-    int last_number, current_number; //int to avoid underflow
-    unsigned solution1 = 0;
+bool is_safe(int *level, int size){
     trend trend;
+    int i;
 
-    while(fgets(line, HEURISTIC_SIZE, stdin) != NULL){
-        number_str = strtok(line," ");
-        last_number = atoi(number_str);
+    if(level[0] < level[1] && level[1] <= level[0] + 3){
+        trend = increasing;
+    }else if(level[0] - 3 <= level[1] && level[1] < level[0]){
+        trend = decreasing;
+    }else{
+        return false;
+    }
 
-        number_str = strtok(NULL," ");
-        current_number = atoi(number_str);
-
-        if(last_number < current_number && current_number <= last_number + 3){
-            trend = increasing;
-        }else if(last_number - 3 <= current_number && current_number < last_number){
-            trend = decreasing;
-        }else{
-            goto unsafe;
+    i = 2;
+    if(trend == increasing){
+        while(i < size){
+            if(!(level[i-1] < level[i] && level[i] <= level[i-1] + 3)) return false;
+            i++;
         }
-
-        last_number = current_number;
-
-        if(trend == increasing){
-            while((number_str = strtok(NULL," ")) != NULL){
-                current_number = atoi(number_str);
-                if(!(last_number < current_number && current_number <= last_number + 3)) goto unsafe;
-                last_number = current_number;
-            }
-        }else{
-            while((number_str = strtok(NULL," ")) != NULL){
-                current_number = atoi(number_str);
-                if(!(last_number - 3 <= current_number && current_number < last_number)) goto unsafe;
-                last_number = current_number;
-            }
+    }else{
+        while(i < size){
+            if(!(level[i-1] - 3 <= level[i] && level[i] < level[i-1])) return false;
+            i++;
         }
+    }
 
-        solution1++;
+    return true;
+}
 
-        unsafe:
+int main(){
+    char line[LINE_HEURISTIC_MAX_SIZE];
+    char *number_str;
+    int level[LEVEL_HEURISTIC_MAX_SIZE];
+    int size;
+    unsigned solution1 = 0;
+
+    while(fgets(line, LINE_HEURISTIC_MAX_SIZE, stdin) != NULL){
+        size = str_to_int_array(line,level, " ");
+        if(is_safe(level,size)){
+            solution1++;
+        }
     }
 
     printf("part 1: %d\n", solution1);
