@@ -1,6 +1,8 @@
 #ifndef GPLIB_ARRAY
 #define GPLIB_ARRAY
 
+#include <stdbool.h>
+
 /*
 *   Converts an string represented array to an int array,
 *   the numbers in the string are separated by a SEP
@@ -24,5 +26,10 @@ unsigned str_to_int_array(char *s, int *arr, char *sep);
 *   @return The number of elements in the array
 */
 unsigned str_to_unsigned_array(char *s, unsigned *arr, char *sep);
+
+
+bool index_in_range_2darray(int x, int y, unsigned rows, unsigned columns){
+    return 0 <= x && x < rows && 0 <= y && y < columns;
+}
 
 #endif
