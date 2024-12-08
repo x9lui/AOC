@@ -30,3 +30,7 @@ unsigned str_to_unsigned_array(char *s, unsigned *arr, char *sep){
 
     return size;
 }
+
+bool index_in_range_2darray(int x, int y, unsigned rows, unsigned columns){
+    return 0 <= x && x < rows && 0 <= y && y < columns;
+}
