@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "../gplib/array.h"
 
-#define HEURISTIC_LINE_MAX_SIZE 1000
+#define LINE_HEURISTIC_MAX_SIZE 1000
 #define HEURISTIC_MAX_N_LINES 1000
 
 typedef enum{up, right, down, left}direction;
@@ -65,11 +65,11 @@ bool is_marked(unsigned x, unsigned y, direction direction,
 }
 
 bool is_loop(int x, int y, 
- char grid[HEURISTIC_MAX_N_LINES][HEURISTIC_LINE_MAX_SIZE],
+ char grid[HEURISTIC_MAX_N_LINES][LINE_HEURISTIC_MAX_SIZE],
  unsigned rows, unsigned columns, direction direction){
     int new_x, new_y;
     //static to avoid segmentation fault in the stack
-    static point_mark marks[HEURISTIC_LINE_MAX_SIZE * HEURISTIC_LINE_MAX_SIZE];
+    static point_mark marks[LINE_HEURISTIC_MAX_SIZE * LINE_HEURISTIC_MAX_SIZE];
     unsigned n_marks = 0;
     point_mark new_mark;
 
@@ -103,8 +103,8 @@ bool is_loop(int x, int y,
 }
 
 int main(){
-    char initial_grid[HEURISTIC_MAX_N_LINES][HEURISTIC_LINE_MAX_SIZE];
-    char grid[HEURISTIC_MAX_N_LINES][HEURISTIC_LINE_MAX_SIZE];
+    char initial_grid[HEURISTIC_MAX_N_LINES][LINE_HEURISTIC_MAX_SIZE];
+    char grid[HEURISTIC_MAX_N_LINES][LINE_HEURISTIC_MAX_SIZE];
     unsigned rows = 0;
     unsigned columns = 0;
 
@@ -119,7 +119,7 @@ int main(){
 
     
     //Load grid
-    while(fgets(initial_grid[rows], HEURISTIC_LINE_MAX_SIZE, stdin) != NULL) rows++;
+    while(fgets(initial_grid[rows], LINE_HEURISTIC_MAX_SIZE, stdin) != NULL) rows++;
     while(initial_grid[0][columns] != '\n') columns++;
 
     memcpy(grid, initial_grid, sizeof(initial_grid));
