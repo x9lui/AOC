@@ -27,6 +27,17 @@ unsigned str_to_int_array(char *s, int *arr, char *sep);
 */
 unsigned str_to_unsigned_array(char *s, unsigned *arr, char *sep);
 
+/*
+*   Converts an string represented array to a long array,
+*   the numbers in the string are separated by a SEP
+*   character
+*   
+*   @param s the string represented array
+*   @param sep the separators between the numbers
+*
+*   @return The number of elements in the array
+*/
+unsigned str_to_long_array(char *s, long *arr, char *sep);
 
 bool index_in_range_2darray(int x, int y, unsigned rows, unsigned columns);
 
